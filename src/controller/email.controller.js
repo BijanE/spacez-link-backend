@@ -27,7 +27,8 @@ module.exports = {
           isAuth: true,
           massage: "The Email Config has been created successfuly",
           error: null,
-          link: "http://localhost:8080/api/submit/email-send/" + email,
+          link:
+            "https://spacez-link.herokuapp.com/api/submit/email-send/" + email,
           data: results,
         });
       }
