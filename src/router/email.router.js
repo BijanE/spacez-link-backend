@@ -1,4 +1,3 @@
-const emailController = require("../controller/email.controller");
 const { EmailConfig, sendEmail } = require("../controller/email.controller");
 const router = require("express").Router();
 

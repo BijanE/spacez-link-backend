@@ -23,7 +23,6 @@ module.exports = {
   sendEmail: (data, username, callback) => {
     function setValue(value) {
       configs = value;
-      console.log(configs);
     }
 
     const my = new Promise((resolve, reject) => {
