@@ -3,8 +3,15 @@ const { EmailConfig, sendEmail } = require("../model/email.model");
 module.exports = {
   EmailConfig: (req, res) => {
     const body = req.body;
-    const atPosition = body.email_username.indexOf("@");
-    const email = body.email_username.slice(0, atPosition);
+    if (body.email_username.includes("@")) {
+      var atPosition = body.email_username.indexOf("@");
+      var email = body.email_username.slice(0, atPosition);
+    } else {
+      return res.status(400).json({
+        isAuth: false,
+        massage: "Please Enter Email In Right Way",
+      });
+    }
     EmailConfig(body, (err, results) => {
       if (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -27,8 +34,7 @@ module.exports = {
           isAuth: true,
           massage: "The Email Config has been created successfuly",
           error: null,
-          link:
-            "https://spacez-link.herokuapp.com/api/submit/email-send/" + email,
+          link: `https://spacez-link.herokuapp.com/api/submit/email-send/${email}`,
           data: results,
         });
       }
