@@ -16,7 +16,7 @@ module.exports = {
         massage: "Please Enter Email In Right Way",
       });
     }
-    if (body.email_password.lenght() != 16) {
+    if (body.email_password.length != 16) {
       return res.status(400).json({
         isAuth: false,
         massage: "Please Enter Autenticator Password In Right Way",
