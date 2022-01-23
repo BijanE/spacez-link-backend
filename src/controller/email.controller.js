@@ -74,6 +74,8 @@ module.exports = {
   // Get link if its forgotten
   emailGetLink: (req, res) => {
     emailGetLink(req.params.auth, (err, results) => {
+      var atPosition = results[0].email_username.indexOf("@");
+      var email = results[0].email_username.slice(0, atPosition);
       if (err) {
         return res.status(400).json({
           isAuth: false,
@@ -85,7 +87,8 @@ module.exports = {
         return res.status(200).json({
           isAuth: true,
           error: null,
-          link: `https://spacez-link.herokuapp.com/api/submit/email-send/${results}`,
+          link: `https://spacez-link.herokuapp.com/api/submit/email-send/${email}`,
+          massage: "Link gotten successfuly",
         });
       }
     });
