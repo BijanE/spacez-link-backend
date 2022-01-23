@@ -1,4 +1,8 @@
-const { EmailConfig, sendEmail } = require("../model/email.model");
+const {
+  EmailConfig,
+  sendEmail,
+  emailGetLink,
+} = require("../model/email.model");
 
 module.exports = {
   EmailConfig: (req, res) => {
@@ -10,6 +14,12 @@ module.exports = {
       return res.status(400).json({
         isAuth: false,
         massage: "Please Enter Email In Right Way",
+      });
+    }
+    if (body.email_password.lenght() != 12) {
+      return res.status(400).json({
+        isAuth: false,
+        massage: "Please Enter Autenticator Password In Right Way",
       });
     }
     EmailConfig(body, (err, results) => {
@@ -57,6 +67,25 @@ module.exports = {
           error: null,
           massage: "Email has been sent successfuly",
           data: results,
+        });
+      }
+    });
+  },
+  // Get link if its forgotten
+  emailGetLink: (req, res) => {
+    emailGetLink(req.params.auth, (err, results) => {
+      if (err) {
+        return res.status(400).json({
+          isAuth: false,
+          error: err,
+          massage: "Cannot get link or link doesnt exist!",
+          data: null,
+        });
+      } else {
+        return res.status(200).json({
+          isAuth: true,
+          error: null,
+          link: `https://spacez-link.herokuapp.com/api/submit/email-send/${results}`,
         });
       }
     });

@@ -2,6 +2,8 @@ const dbConn = require("../../config/db.config");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
+const { compareSync, hashSync, genSalt } = require("bcrypt");
+
 var configs = [];
 
 module.exports = {
@@ -71,5 +73,18 @@ module.exports = {
         }
       });
     });
+  },
+  emailGetLink: (data, callback) => {
+    dbConn.query(
+      "SELECT email_username FROM emailconfigs WHERE email_password = ?",
+      data,
+      (error, results, _fields) => {
+        if (error) {
+          return callback(error);
+        } else {
+          return callback(null, results);
+        }
+      }
+    );
   },
 };

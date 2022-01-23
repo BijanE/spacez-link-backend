@@ -1,9 +1,15 @@
-const { EmailConfig, sendEmail } = require("../controller/email.controller");
+const {
+  EmailConfig,
+  sendEmail,
+  emailGetLink,
+} = require("../controller/email.controller");
 const router = require("express").Router();
 
 // For configurate email config
 router.post("/email-config", EmailConfig);
 
 router.post("/email-send/:username", sendEmail);
+
+router.get("/email-get-link", emailGetLink);
 
 module.exports = router;
