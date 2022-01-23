@@ -74,6 +74,14 @@ module.exports = {
   // Get link if its forgotten
   emailGetLink: (req, res) => {
     emailGetLink(req.params.auth, (err, results) => {
+      if (!results) {
+        return res.status(400).json({
+          isAuth: false,
+          error: err,
+          massage: "link doesnt exist!",
+          data: null,
+        });
+      }
       var atPosition = results[0].email_username.indexOf("@");
       var email = results[0].email_username.slice(0, atPosition);
       if (err) {
