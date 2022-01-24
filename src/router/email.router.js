@@ -10,6 +10,6 @@ router.post("/email-config", EmailConfig);
 
 router.post("/email-send/:username", sendEmail);
 
-router.get("/email-get-link/:auth", emailGetLink);
+router.get("/email-get-link/:email/:auth", emailGetLink);
 
 module.exports = router;

@@ -4,10 +4,15 @@ const {
   emailGetLink,
 } = require("../model/email.model");
 
+const CryptoJS = require("crypto-js");
+
 module.exports = {
   EmailConfig: (req, res) => {
     const body = req.body;
-    if (body.email_username.includes("@")) {
+    if (
+      body.email_username.includes("@") &&
+      body.email_username.includes("gmail.com")
+    ) {
       var atPosition = body.email_username.indexOf("@");
       var email = body.email_username.slice(0, atPosition);
     } else {
@@ -22,6 +27,11 @@ module.exports = {
         massage: "Please Enter Autenticator Password In Right Way",
       });
     }
+    const cipher = CryptoJS.AES.encrypt(
+      body.email_password,
+      process.env.KEY
+    ).toString();
+    body.email_password = cipher;
     EmailConfig(body, (err, results) => {
       if (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -45,7 +55,6 @@ module.exports = {
           massage: "The Email Config has been created successfuly",
           error: null,
           link: `https://spacez-link.herokuapp.com/api/submit/email-send/${email}`,
-          data: results,
         });
       }
     });
@@ -66,35 +75,38 @@ module.exports = {
           isAuth: true,
           error: null,
           massage: "Email has been sent successfuly",
-          data: results,
         });
       }
     });
   },
   // Get link if its forgotten
   emailGetLink: (req, res) => {
-    emailGetLink(req.params.auth, (err, results) => {
+    if (req.params.auth.length != 16) {
+      return res.status(400).json({
+        isAuth: false,
+        massage: "Please Enter Autenticator Password In Right Way",
+      });
+    }
+    if (
+      !req.params.email.includes("@") ||
+      !req.params.email.includes("gmail.com")
+    ) {
+      return res.status(400).json({
+        isAuth: false,
+        massage: "Please Enter Email In Right Way",
+      });
+    }
+    emailGetLink(req.params.email, req.params.auth, (err, results) => {
+      var atPosition = req.params.email.indexOf("@");
+      var email = req.params.email.slice(0, atPosition);
       if (!results) {
         return res.status(400).json({
           isAuth: false,
-          error: err,
-          massage: "link doesnt exist!",
-          data: null,
-        });
-      }
-      var atPosition = results[0].email_username.indexOf("@");
-      var email = results[0].email_username.slice(0, atPosition);
-      if (err) {
-        return res.status(400).json({
-          isAuth: false,
-          error: err,
           massage: "Cannot get link or link doesnt exist!",
-          data: null,
         });
-      } else {
+      } else if (results) {
         return res.status(200).json({
           isAuth: true,
-          error: null,
           link: `https://spacez-link.herokuapp.com/api/submit/email-send/${email}`,
           massage: "Link gotten successfuly",
         });
