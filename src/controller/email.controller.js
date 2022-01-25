@@ -19,12 +19,16 @@ module.exports = {
       return res.status(400).json({
         isAuth: false,
         massage: "Please Enter Email In Right Way",
+        error: null,
+        data: null,
       });
     }
     if (body.email_password.length != 16) {
       return res.status(400).json({
         isAuth: false,
         massage: "Please Enter Autenticator Password In Right Way",
+        error: null,
+        data: null,
       });
     }
     const cipher = CryptoJS.AES.encrypt(
@@ -52,9 +56,10 @@ module.exports = {
       } else {
         return res.status(201).json({
           isAuth: true,
-          massage: "The Email Config has been created successfuly",
+          massage: "Link gotten successfuly",
           error: null,
           link: `https://spacez-link.herokuapp.com/api/submit/email-send/${email}`,
+          data: null,
         });
       }
     });

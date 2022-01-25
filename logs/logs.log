@@ -1,0 +1,10 @@
+[0mPOST /api/submit/email-send/bijanetessam [32m201[0m 2712.468 ms - 72[0m
+[0mPOST /api/submit/email-send/bijanetessam [32m201[0m 2257.099 ms - 72[0m
+[0mPOST /api/submit/email-send/bijanetessam [32m201[0m 2128.764 ms - 72[0m
+[0mPOST /api/submit/email-send/bijanetessam [32m201[0m 1617.627 ms - 72[0m
+[0mPOST /api/submit/email-config [33m400[0m 602.650 ms - 394[0m
+[0mPOST /api/submit/email-config [33m400[0m 313.042 ms - 394[0m
+[0mPOST /api/submit/email-config [33m400[0m 278.683 ms - 394[0m
+[0mGET /api/submit/email-get-link/bijanetessam@gmail.com/nmborjxvfcsvqneu [32m200[0m 233.009 ms - 129[0m
+[0mGET /api/submit/email-get-link/bijanetessam@gmail.com/nmborjxvfcsvqneu [32m200[0m 324.396 ms - 129[0m
+[0mPOST /api/submit/email-config [33m400[0m 213.070 ms - 394[0m
